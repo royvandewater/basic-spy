@@ -1,7 +1,7 @@
 (defproject basic-spy "1.0.0"
-  :description "FIXME: write description"
+  :description "Basic spy for tracking if a method has been called"
   :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :license {:name "MIT"
+            :url "https://opensource.org/licenses/MIT"}
+  :dependencies [[org.clojure/clojure "1.9.0"]
                  [proto-repl "0.3.1"]])
