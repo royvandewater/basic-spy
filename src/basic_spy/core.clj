@@ -1,6 +1,19 @@
-(ns basic-spy.core)
+(ns basic_spy.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defmacro called?
+  "Convenience macro for checking if a spy has been called"
+  [spy]
+  `((:called? (meta ~spy))))
+
+(defn create-spy
+  "Create a new spy function"
+  ([]
+   (create-spy #(constantly nil)))
+
+  ([f]
+   (let [n (atom 0)]
+     (with-meta
+       (fn [& args]
+         (swap! n inc)
+         (apply f args))
+       {:called? (fn [] (> @n 0))}))))
