@@ -1,4 +1,4 @@
-(defproject basic-spy "1.0.0"
+(defproject basic-spy "1.1.0"
   :description "Basic spy for tracking if a method has been called"
   :url "http://example.com/FIXME"
   :license {:name "MIT"

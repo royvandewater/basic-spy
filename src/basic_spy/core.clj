@@ -1,5 +1,10 @@
 (ns basic_spy.core)
 
+(defmacro call-count
+  "Convenience macro for accessing the number of times a spy has been called"
+  [spy]
+  `((:call-count (meta ~spy))))
+  
 (defmacro called?
   "Convenience macro for checking if a spy has been called"
   [spy]
@@ -16,4 +21,5 @@
        (fn [& args]
          (swap! n inc)
          (apply f args))
-       {:called? (fn [] (> @n 0))}))))
+       {:called? (fn [] (> @n 0))
+        :call-count (fn [] @n)}))))

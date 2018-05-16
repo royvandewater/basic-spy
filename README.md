@@ -7,7 +7,7 @@ Basic spy for tracking if a method has been called.
 If using Leiningen:
 
 ```
-[royvandewater/basic-spy "1.0.0"]
+[royvandewater/basic-spy "1.1.0"]
 ```
 
 ## Usage
@@ -16,26 +16,34 @@ If using Leiningen:
 (ns example.core-test
   (:require [clojure.test :refer :all]
             [example.core :refer :all]
-            [basic_spy.core :refer [create-spy called?]]))
+            [basic_spy.core :refer [create-spy called? call-count]]))
 
-; Create an noop spy
-(let [spy (create-spy)]
-  (func-that-calls create-spy)
-  (is (called? spy))) ; will only pass if func-that-calls create-spy actually calls create-spy
+(deftest examples-test
 
-; Create an passthru
-(let [spy (create-spy #(inc %))]
-  (map spy [1 2 3]); will return lazy seq: [2 3 4]
-  (is (called? spy))) ; will pass because spy was called thrice
+  (testing "with a default noop spy"
+    (let [spy (create-spy)]
+      (spy)
+      (is (called? spy))))
+
+  (testing "when not called"
+    (let [spy (create-spy)]
+      (is (not (called? spy)))))
+
+  (testing "with a passthru spy"
+    (let [spy (create-spy #(inc %))]
+      (is (= [2 3 4] (doall (map spy [1 2 3]))))
+      (is (called? spy))))
+
+  (testing "counting the calls"
+    (let [spy (create-spy)]
+      (spy)
+      (spy)
+      (spy)
+      (is (= 3 (call-count spy))))))
 ```
 
 ## License
 
-Copyright © 2018 FIXME
+Copyright © 2018
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
-
-```
-
-```
+Distributed under the MIT License
